@@ -1,0 +1,18 @@
+Main.java
+- starts the program
+
+model/
+- Trail.java: trail fields like name, length, elevation, pictures
+- Wildlife.java: wildlife name, description, notes, pictures
+- Rating.java: simple rating value and maybe comment
+
+data/
+- Database.java: loads/saves JSON or text data
+- SeedData.java: initial sample trails/wildlife
+
+service/
+- TrailService.java: add/edit/search/rate trails
+- WildlifeService.java: add wildlife info to trails
+
+ui/
+- Swing screens/panels for viewing and editing data
