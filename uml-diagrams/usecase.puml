@@ -1,23 +1,52 @@
 @startuml
 left to right direction
+skinparam packageStyle rectangle
 
 actor User
 
 rectangle "Wildlife Explorer" {
-  usecase "Search Trails" as UC1
-  usecase "View Trail Info" as UC2
-  usecase "Add New Trail" as UC3
-  usecase "Edit Trail Info" as UC4
-  usecase "Rate Trail" as UC5
-  usecase "Add Wildlife Sighting" as UC6
+  usecase "Search Trails" as UC_Search
+  usecase "View Trail Information" as UC_View
+  usecase "Add New Trail" as UC_AddTrail
+  usecase "Edit Existing Trail Information" as UC_EditTrail
+  usecase "Rate Existing Trail" as UC_RateTrail
+  usecase "Add Wildlife Information to Trail" as UC_AddWildlife
+
+  usecase "Enter Trail Name" as UC_TrailName
+  usecase "Enter Trail Length" as UC_TrailLength
+  usecase "Enter Elevation Changes" as UC_Elevation
+  usecase "Add Trail Pictures" as UC_TrailPictures
+
+  usecase "Enter Wildlife Name" as UC_WildlifeName
+  usecase "Enter Wildlife Description" as UC_WildlifeDesc
+  usecase "Enter Encounter Notes" as UC_EncounterNotes
+  usecase "Add Wildlife Pictures" as UC_WildlifePictures
+
+  usecase "View Concise Trail Information" as UC_ConciseView
 }
 
-User --> UC1
-User --> UC2
-User --> UC3
-User --> UC4
-User --> UC5
-User --> UC6
+User --> UC_Search
+User --> UC_View
+User --> UC_AddTrail
+User --> UC_EditTrail
+User --> UC_RateTrail
+User --> UC_AddWildlife
 
-UC1 --> UC2 : <<include>>
+UC_Search .> UC_View : <<include>>
+UC_View .> UC_ConciseView : <<include>>
+
+UC_AddTrail .> UC_TrailName : <<include>>
+UC_AddTrail .> UC_TrailLength : <<include>>
+UC_AddTrail .> UC_Elevation : <<include>>
+UC_AddTrail .> UC_TrailPictures : <<include>>
+
+UC_AddWildlife .> UC_WildlifeName : <<include>>
+UC_AddWildlife .> UC_WildlifeDesc : <<include>>
+UC_AddWildlife .> UC_EncounterNotes : <<include>>
+UC_AddWildlife .> UC_WildlifePictures : <<include>>
+
+UC_EditTrail .> UC_View : <<include>>
+UC_RateTrail .> UC_View : <<include>>
+UC_AddWildlife .> UC_View : <<include>>
+
 @enduml
