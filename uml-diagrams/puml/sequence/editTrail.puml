@@ -1,0 +1,30 @@
+@startuml
+title Edit Existing Trail Information
+
+actor User
+boundary SearchPanel
+boundary TrailPanel
+control TrailService
+database Database
+
+User -> SearchPanel : search/selectTrail(trailId)
+SearchPanel -> TrailPanel : openTrailForEdit(trailId)
+
+TrailPanel -> TrailService : getTrailDetails(trailId)
+TrailService -> Database : fetchTrailById(trailId)
+Database --> TrailService : trail
+TrailService --> TrailPanel : trail
+
+TrailPanel --> User : displayEditableTrailForm(trail)
+
+User -> TrailPanel : editTrailFields(updatedInfo)
+User -> TrailPanel : clickSaveChanges()
+
+TrailPanel -> TrailService : updateTrail(trailId, updatedInfo)
+TrailService -> Database : updateTrailRecord(trailId, updatedInfo)
+Database --> TrailService : updatedTrail
+TrailService --> TrailPanel : updatedTrail
+
+TrailPanel --> User : displayUpdateConfirmation(updatedTrail)
+
+@enduml

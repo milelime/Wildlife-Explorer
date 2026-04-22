@@ -1,0 +1,24 @@
+@startuml
+title Add New Trail
+
+actor User
+boundary TrailPanel
+control TrailService
+database Database
+
+User -> TrailPanel : chooseAddNewTrail()
+
+User -> TrailPanel : enterTrailName(name)
+User -> TrailPanel : enterTrailLength(length)
+User -> TrailPanel : enterElevationChanges(elevation)
+User -> TrailPanel : uploadTrailPictures(pictures)
+User -> TrailPanel : clickSaveTrail()
+
+TrailPanel -> TrailService : addTrail(name, length, elevation, pictures)
+TrailService -> Database : insertTrail(name, length, elevation, pictures)
+Database --> TrailService : savedTrail
+TrailService --> TrailPanel : savedTrail
+
+TrailPanel --> User : displayTrailAddedConfirmation(savedTrail)
+
+@enduml
