@@ -1,52 +1,72 @@
 @startuml
-left to right direction
+top to bottom direction
+skinparam shadowing false
 skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam ranksep 70
+skinparam nodesep 60
+skinparam DefaultTextAlignment center
+
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+}
+
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+}
 
 actor User
 
 rectangle "Wildlife Explorer" {
-  usecase "Search Trails" as UC_Search
-  usecase "View Trail Information" as UC_View
-  usecase "Add New Trail" as UC_AddTrail
-  usecase "Edit Existing Trail Information" as UC_EditTrail
-  usecase "Rate Existing Trail" as UC_RateTrail
-  usecase "Add Wildlife Information to Trail" as UC_AddWildlife
 
-  usecase "Enter Trail Name" as UC_TrailName
-  usecase "Enter Trail Length" as UC_TrailLength
-  usecase "Enter Elevation Changes" as UC_Elevation
-  usecase "Add Trail Pictures" as UC_TrailPictures
+  package "Use" {
+    usecase "Search Trails" as UC_Search
+    usecase "View Trail Information\n(in concise format)" as UC_View
+  }
 
-  usecase "Enter Wildlife Name" as UC_WildlifeName
-  usecase "Enter Wildlife Description" as UC_WildlifeDesc
-  usecase "Enter Encounter Notes" as UC_EncounterNotes
-  usecase "Add Wildlife Pictures" as UC_WildlifePictures
+  package "Contribute" {
+    usecase "Add New Trail" as UC_AddTrail
+    usecase "Rate Existing Trail" as UC_RateTrail
+    usecase "Edit Existing Trail Information" as UC_EditTrail
+    usecase "Add Wildlife Information\nto Trail" as UC_AddWildlife
+  }
 
-  usecase "View Concise Trail Information" as UC_ConciseView
+  package "Required Trail Details" {
+    usecase "Provide Trail Name" as UC_TrailName
+    usecase "Provide Trail Length" as UC_TrailLength
+    usecase "Provide Elevation Changes" as UC_Elevation
+    usecase "Provide Trail Pictures" as UC_TrailPictures
+  }
+
+  package "Required Wildlife Details" {
+    usecase "Provide Wildlife Name" as UC_WildlifeName
+    usecase "Provide Wildlife Description" as UC_WildlifeDesc
+    usecase "Provide Encounter Notes" as UC_EncounterNotes
+    usecase "Provide Wildlife Pictures" as UC_WildlifePictures
+  }
 }
 
 User --> UC_Search
-User --> UC_View
 User --> UC_AddTrail
-User --> UC_EditTrail
 User --> UC_RateTrail
+User --> UC_EditTrail
 User --> UC_AddWildlife
 
-UC_Search .> UC_View : <<include>>
-UC_View .> UC_ConciseView : <<include>>
+UC_Search .[#1f77b4].> UC_View : <<include>>
+UC_RateTrail .[#2ca02c].> UC_View : <<include>>
+UC_EditTrail .[#d62728].> UC_View : <<include>>
+UC_AddWildlife .[#9467bd].> UC_View : <<include>>
 
-UC_AddTrail .> UC_TrailName : <<include>>
-UC_AddTrail .> UC_TrailLength : <<include>>
-UC_AddTrail .> UC_Elevation : <<include>>
-UC_AddTrail .> UC_TrailPictures : <<include>>
+UC_AddTrail .[#ff7f0e].> UC_TrailName : <<include>>
+UC_AddTrail .[#bcbd22].> UC_TrailLength : <<include>>
+UC_AddTrail .[#17becf].> UC_Elevation : <<include>>
+UC_AddTrail .[#8c564b].> UC_TrailPictures : <<include>>
 
-UC_AddWildlife .> UC_WildlifeName : <<include>>
-UC_AddWildlife .> UC_WildlifeDesc : <<include>>
-UC_AddWildlife .> UC_EncounterNotes : <<include>>
-UC_AddWildlife .> UC_WildlifePictures : <<include>>
-
-UC_EditTrail .> UC_View : <<include>>
-UC_RateTrail .> UC_View : <<include>>
-UC_AddWildlife .> UC_View : <<include>>
+UC_AddWildlife .[#e377c2].> UC_WildlifeName : <<include>>
+UC_AddWildlife .[#7f7f7f].> UC_WildlifeDesc : <<include>>
+UC_AddWildlife .[#8c6d31].> UC_EncounterNotes : <<include>>
+UC_AddWildlife .[#3182bd].> UC_WildlifePictures : <<include>>
 
 @enduml
