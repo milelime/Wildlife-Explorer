@@ -1,0 +1,26 @@
+@startuml
+title View Trail Information
+
+actor User
+boundary SearchPanel
+boundary TrailPanel
+control TrailService
+control WildlifeService
+database Database
+
+User -> SearchPanel : selectTrail(trailId)
+SearchPanel -> TrailPanel : openTrail(trailId)
+
+TrailPanel -> TrailService : getTrailDetails(trailId)
+TrailService -> Database : fetchTrailById(trailId)
+Database --> TrailService : trail
+TrailService --> TrailPanel : trail
+
+TrailPanel -> WildlifeService : getWildlifeForTrail(trailId)
+WildlifeService -> Database : fetchWildlifeByTrail(trailId)
+Database --> WildlifeService : wildlifeList
+WildlifeService --> TrailPanel : wildlifeList
+
+TrailPanel --> User : displayConciseTrailInfo(trail, wildlifeList)
+
+@enduml

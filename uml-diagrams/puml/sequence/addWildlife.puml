@@ -1,0 +1,29 @@
+@startuml
+title Add Wildlife Information to a Trail
+
+actor User
+boundary TrailPanel
+boundary WildlifePanel
+control WildlifeService
+database Database
+
+User -> TrailPanel : openExistingTrail(trailId)
+TrailPanel --> User : displayTrail(trailId)
+
+User -> TrailPanel : chooseAddWildlifeInformation()
+TrailPanel -> WildlifePanel : openWildlifeForm(trailId)
+
+User -> WildlifePanel : enterWildlifeName(name)
+User -> WildlifePanel : enterWildlifeDescription(description)
+User -> WildlifePanel : enterEncounterNotes(notes)
+User -> WildlifePanel : uploadWildlifePictures(pictures)
+User -> WildlifePanel : clickSaveWildlife()
+
+WildlifePanel -> WildlifeService : addWildlife(trailId, name, description, notes, pictures)
+WildlifeService -> Database : insertWildlife(trailId, name, description, notes, pictures)
+Database --> WildlifeService : savedWildlife
+WildlifeService --> WildlifePanel : savedWildlife
+
+WildlifePanel --> User : displayWildlifeAddedConfirmation(savedWildlife)
+
+@enduml

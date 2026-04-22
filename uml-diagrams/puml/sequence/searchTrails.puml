@@ -1,0 +1,19 @@
+@startuml
+title Search Trails
+
+actor User
+boundary SearchPanel
+control TrailService
+database Database
+
+User -> SearchPanel : enterSearchCriteria(criteria)
+User -> SearchPanel : clickSearch()
+
+SearchPanel -> TrailService : searchTrails(criteria)
+TrailService -> Database : findTrails(criteria)
+Database --> TrailService : matchingTrails
+TrailService --> SearchPanel : matchingTrails
+
+SearchPanel --> User : displaySearchResults(matchingTrails)
+
+@enduml
