@@ -1,18 +1,28 @@
+Wildlife Explorer — source layout (Java)
+
+Root: src/main/java/wildlifeexplorer/
+
 Main.java
-- starts the program
+- Application entry point (starts the program).
 
 model/
-- Trail.java: trail fields like name, length, elevation, pictures
-- Wildlife.java: wildlife name, description, notes, pictures
-- Rating.java: simple rating value and maybe comment
+- Trail.java: domain data for a trail (e.g. name, length, elevation, pictures).
+- Wildlife.java: wildlife linked to a trail (e.g. name, description, encounter notes, pictures).
+- Rating.java: a user’s rating for a trail (e.g. score; optional comment if you add it later).
 
 data/
-- Database.java: loads/saves JSON or text data
-- SeedData.java: initial sample trails/wildlife
+- Database.java: persistence for trails, wildlife, ratings (e.g. load/save JSON or similar).
+- SeedData.java: optional starter data for development or first run.
 
 service/
-- TrailService.java: add/edit/search/rate trails
-- WildlifeService.java: add wildlife info to trails
+- TrailService.java: trail lifecycle and queries (add, edit, search, load by id, and related trail operations).
+- WildlifeService.java: add and load wildlife information for a trail.
+- RatingService.java: submit and read ratings for trails.
 
-ui/
-- Swing screens/panels for viewing and editing data
+ui/ (Swing)
+- MainFrame.java: top-level window (javax.swing.JFrame).
+- SearchPanel.java: search trails and open a selected trail.
+- TrailPanel.java: show trail details, rate trail, edit trail, add new trail, navigate to wildlife entry.
+- WildlifePanel.java: form flow for adding wildlife to a trail.
+
+UML sequence diagrams for the main flows live under uml-diagrams/puml/.
