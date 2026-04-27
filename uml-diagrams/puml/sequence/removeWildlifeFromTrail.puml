@@ -1,0 +1,25 @@
+@startuml
+!include ../include/diagram-style.puml
+
+title Remove Wildlife from Trail (species stays in catalog)
+
+actor User
+boundary TrailPanel
+control TrailService
+database Database
+
+User -> TrailPanel : click "Remove" on wildlife block
+
+TrailPanel -> User : confirm dialog
+
+User -> TrailPanel : confirm
+
+TrailPanel -> TrailService : removeWildlifeFromTrail(trailId, wildlifeId)
+TrailService -> Database : removeWildlifeFromTrail(...)
+Database -> Database : save()
+Database --> TrailService : ok
+TrailService --> TrailPanel : ok
+
+TrailPanel --> User : wildlife list refreshes
+
+@enduml

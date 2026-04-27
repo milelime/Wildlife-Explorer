@@ -1,26 +1,29 @@
 @startuml
+!include ../include/diagram-style.puml
+
 title View Trail Information
 
 actor User
 boundary SearchPanel
 boundary TrailPanel
 control TrailService
-control WildlifeService
 database Database
 
-User -> SearchPanel : selectTrail(trailId)
-SearchPanel -> TrailPanel : openTrail(trailId)
+User -> SearchPanel : select trail, Open
 
-TrailPanel -> TrailService : getTrailDetails(trailId)
+SearchPanel -> TrailPanel : setTrail(trailId) / open detail
+
+TrailPanel -> TrailService : getTrail(trailId)
 TrailService -> Database : fetchTrailById(trailId)
 Database --> TrailService : trail
+
+note right of TrailService
+  Trail already contains wildlifeList
+  (joined from catalog when loaded).
+end note
+
 TrailService --> TrailPanel : trail
 
-TrailPanel -> WildlifeService : getWildlifeForTrail(trailId)
-WildlifeService -> Database : fetchWildlifeByTrail(trailId)
-Database --> WildlifeService : wildlifeList
-WildlifeService --> TrailPanel : wildlifeList
-
-TrailPanel --> User : displayConciseTrailInfo(trail, wildlifeList)
+TrailPanel --> User : display trail metadata,\ntrail images, wildlife text + thumbnails
 
 @enduml

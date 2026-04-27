@@ -1,27 +1,31 @@
 @startuml
-title Rate Existing Trail
+!include ../include/diagram-style.puml
+
+title Rate Existing Trail (0–10)
 
 actor User
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> TrailPanel : openExistingTrail(trailId)
-TrailPanel -> TrailService : getTrailDetails(trailId)
+User -> TrailPanel : open trail detail
+
+TrailPanel -> TrailService : getTrail(trailId)
 TrailService -> Database : fetchTrailById(trailId)
 Database --> TrailService : trail
 TrailService --> TrailPanel : trail
 
-TrailPanel --> User : displayTrail(trail)
+TrailPanel --> User : show trail info
 
-User -> TrailPanel : selectRating(score)
-User -> TrailPanel : submitRating()
+User -> TrailPanel : click "Rate"
+User -> TrailPanel : click score button (0–10)
 
-TrailPanel -> TrailService : addRating(trailId, score)
+TrailPanel -> TrailService : rateTrail(trailId, score)
 TrailService -> Database : insertRating(trailId, score)
-Database --> TrailService : ratingSaved
-TrailService --> TrailPanel : updatedRatingInfo
+Database -> Database : save()
+Database --> TrailService : ok
+TrailService --> TrailPanel : ok
 
-TrailPanel --> User : displayRatingConfirmation(updatedRatingInfo)
+TrailPanel --> User : updated average rating shown
 
 @enduml

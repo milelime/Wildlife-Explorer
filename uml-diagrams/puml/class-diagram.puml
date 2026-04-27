@@ -1,0 +1,140 @@
+@startuml
+!include include/diagram-style.puml
+
+title Wildlife Explorer — domain and persistence (current code)
+
+package "wildlifeexplorer.model" <<Frame>> {
+  class Wildlife {
+    - name : String
+    - id : int
+    - description : String
+    - notes : String
+    - pictures : List<String>
+    --
+    + Wildlife(name, id, description, notes)
+    + getName() : String
+    + getId() : int
+    + getDescription() : String
+    + getNotes() : String
+    + getPictures() : List<String>
+    + setName(String)
+    + setDescription(String)
+    + setNotes(String)
+    + addPictures(String)
+  }
+
+  class Trail {
+    - name : String
+    - id : int
+    - length : double
+    - elevation : double
+    - rating : double
+    - pictures : List<String>
+    - wildlifeList : List<Wildlife>
+    - totalRating : double
+    - numRating : int
+    --
+    + Trail(name, id, length, elevation)
+    + getName() : String
+    + getId() : int
+    + getLength() : double
+    + getElevation() : double
+    + getRating() : double
+    + getPictures() : List<String>
+    + getWildlifeList() : List<Wildlife>
+    + getTotalRating() : double
+    + getNumRating() : int
+    + setName(String)
+    + setLength(double)
+    + setElevation(double)
+    + addPicture(String)
+    + addWildlife(Wildlife)
+    + updateRating(double)
+    + setRatingState(double, int)
+  }
+
+  class User {
+    - name : String
+    - id : int
+    --
+    + User(name, id)
+    + getName() : String
+    + getId() : int
+    + validateUser(name, id) : boolean
+  }
+}
+
+package "wildlifeexplorer.data" <<Frame>> {
+  class Database {
+    - trails : List<Trail>
+    - wildlifeById : Map<Integer, Wildlife>
+    - trailsPath : Path
+    - wildlifePath : Path
+    --
+    + insertTrail(Trail)
+    + fetchTrailById(int) : Trail
+    + findTrails(String) : List<Trail>
+    + getAllTrails() : List<Trail>
+    + getAllWildlife() : List<Wildlife>
+    + insertRating(int trailId, double score)
+    + insertWildlife(int trailId, Wildlife)
+    + attachExistingWildlifeToTrail(int trailId, int wildlifeId)
+    + removeWildlifeFromTrail(int trailId, int wildlifeId)
+    + save()
+    + load()
+    + clearAllUserData()
+  }
+
+  class TrailList <<legacy>> {
+    .. Not referenced by Main / TrailService ..
+    - trails : List<Trail>
+    - fileName : String
+    --
+    + addTrail(Trail)
+    + getTrailById(int) : Trail
+    + searchTrail(String) : List<Trail>
+    + viewTrail() : List<Trail>
+    + loadFile()
+    + saveFile()
+  }
+}
+
+package "wildlifeexplorer.service" <<Frame>> {
+  class TrailService {
+    - database : Database
+    --
+    + TrailService(Database)
+    + createTrail(name, id, length, elevation)
+    + editTrail(name, id, length, elevation)
+    + saveTrail()
+    + rateTrail(id, rating)
+    + getTrail(id) : Trail
+    + addWildlife(trailId, Wildlife)
+    + listAllWildlife() : List<Wildlife>
+    + attachExistingWildlifeToTrail(trailId, wildlifeId)
+    + removeWildlifeFromTrail(trailId, wildlifeId)
+    + searchTrail(name) : List<Trail>
+    + viewTrails() : List<Trail>
+    + clearAllUserData()
+  }
+}
+
+Trail "1" o-- "many" Wildlife : wildlifeList\n(on-trail references)
+
+TrailService --> Database : uses
+Database "1" *-- "many" Trail : trails
+Database "1" *-- "many" Wildlife : catalog\n(wildlifeById)
+
+note bottom of Trail
+  Persisted trails reference wildlife via ids;
+  loaded trails hold List<Wildlife> joined
+  from the catalog.
+end note
+
+note bottom of TrailList
+  Original sketch used TrailList as repository.
+  Runtime persistence is **Database** (JSON:
+  trails.json + wildlife.json).
+end note
+
+@enduml

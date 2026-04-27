@@ -1,0 +1,75 @@
+' Wildlife Explorer — shared PlantUML style (class + sequence diagrams)
+' Include from puml/:     !include include/diagram-style.puml
+' Include from sequence/: !include ../include/diagram-style.puml
+
+skinparam BackgroundColor white
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam ArrowColor black
+skinparam ArrowThickness 1
+
+' ----- Class diagram (matches original class-diagram.puml) -----
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam package {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam stereotype {
+  BackgroundColor white
+  FontColor black
+}
+
+' ----- Sequence diagram -----
+skinparam sequenceMessageAlign center
+skinparam LifeLineBorderColor black
+skinparam LifeLineBackgroundColor white
+skinparam sequence {
+  ArrowColor black
+  LifeLineBorderColor black
+}
+skinparam participant {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam actor {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam boundary {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam control {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam database {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam entity {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam collections {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+skinparam note {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}

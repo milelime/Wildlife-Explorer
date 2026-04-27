@@ -1,4 +1,6 @@
 @startuml
+!include ../include/diagram-style.puml
+
 title Search Trails
 
 actor User
@@ -6,14 +8,19 @@ boundary SearchPanel
 control TrailService
 database Database
 
-User -> SearchPanel : enterSearchCriteria(criteria)
-User -> SearchPanel : clickSearch()
+User -> SearchPanel : enter criteria (optional)
+User -> SearchPanel : Search or Refresh
 
-SearchPanel -> TrailService : searchTrails(criteria)
+SearchPanel -> TrailService : searchTrail(criteria)
+note right
+  Empty criteria returns all trails
+  (same as viewTrails when blank).
+end note
+
 TrailService -> Database : findTrails(criteria)
 Database --> TrailService : matchingTrails
 TrailService --> SearchPanel : matchingTrails
 
-SearchPanel --> User : displaySearchResults(matchingTrails)
+SearchPanel --> User : list display
 
 @enduml

@@ -1,4 +1,6 @@
 @startuml
+!include ../include/diagram-style.puml
+
 title Edit Existing Trail Information
 
 actor User
@@ -7,24 +9,25 @@ boundary TrailPanel
 control TrailService
 database Database
 
-User -> SearchPanel : search/selectTrail(trailId)
-SearchPanel -> TrailPanel : openTrailForEdit(trailId)
+User -> SearchPanel : search / select trail
+User -> TrailPanel : open trail (from Search or list)
 
-TrailPanel -> TrailService : getTrailDetails(trailId)
+TrailPanel -> TrailService : getTrail(trailId)
 TrailService -> Database : fetchTrailById(trailId)
 Database --> TrailService : trail
 TrailService --> TrailPanel : trail
 
-TrailPanel --> User : displayEditableTrailForm(trail)
+TrailPanel --> User : display trail + wildlife + images
 
-User -> TrailPanel : editTrailFields(updatedInfo)
-User -> TrailPanel : clickSaveChanges()
+User -> TrailPanel : click "Edit", change name/length/elevation
+TrailPanel -> TrailService : editTrail(name, trailId, length, elevation)
 
-TrailPanel -> TrailService : updateTrail(trailId, updatedInfo)
-TrailService -> Database : updateTrailRecord(trailId, updatedInfo)
-Database --> TrailService : updatedTrail
-TrailService --> TrailPanel : updatedTrail
+TrailService -> TrailService : update Trail fields
+TrailService -> Database : save()
 
-TrailPanel --> User : displayUpdateConfirmation(updatedTrail)
+Database --> TrailService : ok
+TrailService --> TrailPanel : ok
+
+TrailPanel --> User : refreshed trail fields
 
 @enduml

@@ -1,24 +1,30 @@
 @startuml
+!include ../include/diagram-style.puml
+
 title Add New Trail
 
 actor User
+boundary SearchPanel
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> TrailPanel : chooseAddNewTrail()
+User -> SearchPanel : click "New Trail"
+User -> SearchPanel : enter name, length, elevation
+SearchPanel -> SearchPanel : nextTrailId()
+SearchPanel -> TrailService : createTrail(name, id, length, elevation)
+TrailService -> Database : insertTrail(trail)
+Database -> Database : save()
+Database --> TrailService : ok
+TrailService --> SearchPanel : ok
 
-User -> TrailPanel : enterTrailName(name)
-User -> TrailPanel : enterTrailLength(length)
-User -> TrailPanel : enterElevationChanges(elevation)
-User -> TrailPanel : uploadTrailPictures(pictures)
-User -> TrailPanel : clickSaveTrail()
+SearchPanel --> User : list refreshes (new trail)
 
-TrailPanel -> TrailService : addTrail(name, length, elevation, pictures)
-TrailService -> Database : insertTrail(name, length, elevation, pictures)
-Database --> TrailService : savedTrail
-TrailService --> TrailPanel : savedTrail
-
-TrailPanel --> User : displayTrailAddedConfirmation(savedTrail)
+' Optional: add photos from trail detail view
+opt add photos later
+  User -> TrailPanel : open trail, "Add Trail Image"
+  TrailPanel -> TrailService : saveTrail()
+  TrailService -> Database : save()
+end
 
 @enduml
