@@ -1,26 +1,28 @@
+package wildlifeexplorer.data;
+
 import java.util.ArrayList;
 import java.util.List;
+import wildlifeexplorer.model.Trail;
 
 public class TrailList {
     private List<Trail> trails;
-    private String file;    
-    
-    public TrailList(String file){
+    private String fileName;
+
+    public TrailList(String fileName) {
         this.trails = new ArrayList<>();
-        this.file = file;
+        this.fileName = fileName;
     }
 
-    public void addTrail( Trail t){
+    public void addTrail(Trail t) {
         trails.add(t);
     }
 
-    public Trail getTrail(int id){
-        for (Trail trail: trails){
-            if (trail.getId() == id){
+    public Trail getTrailById(int id) {
+        for (Trail trail : trails) {
+            if (trail.getId() == id) {
                 return trail;
             }
         }
-        System.out.println("Trail not found");
         return null;
     }
 
@@ -33,14 +35,17 @@ public class TrailList {
         }
         return result;
     }
+
     public List<Trail> viewTrail() {
         return trails;
     }
+
     public void loadFile() {
-        System.out.println("Loading file " + file);
+        System.out.println("Loading file " + fileName);
     }
 
     public void saveFile() {
-        System.out.println("Saving file " + file);
+        System.out.println("Saving file " + fileName);
     }
 }
+

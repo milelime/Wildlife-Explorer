@@ -1,8 +1,14 @@
+package wildlifeexplorer;
+
+import wildlifeexplorer.data.TrailList;
+import wildlifeexplorer.model.Trail;
+import wildlifeexplorer.service.TrailService;
+
 public class Main {
 
     public static void main(String[] args) {
-        TrailList traiList = new TrailList("test.txt");
-        TrailService service = new TrailService(traiList);
+        TrailList trailList = new TrailList("test.txt");
+        TrailService service = new TrailService(trailList);
 
         service.createTrail("route 1",1, 22, 10);
         service.rateTrail(1, 7);
