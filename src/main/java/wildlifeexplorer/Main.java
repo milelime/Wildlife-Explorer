@@ -1,21 +1,28 @@
 package wildlifeexplorer;
 
-import wildlifeexplorer.data.TrailList;
-import wildlifeexplorer.model.Trail;
+import javax.swing.SwingUtilities;
+import wildlifeexplorer.data.Database;
 import wildlifeexplorer.service.TrailService;
+import wildlifeexplorer.ui.MainFrame;
 
 public class Main {
 
     public static void main(String[] args) {
-        TrailList trailList = new TrailList("test.txt");
-        TrailService service = new TrailService(trailList);
+        try {
+            AppPaths.bootstrapUserDataFromDefaultsIfMissing();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not initialize data files from defaults/", e);
+        }
 
-        service.createTrail("route 1",1, 22, 10);
-        service.rateTrail(1, 7);
-        service.rateTrail(1, 1);
-        Trail t = service.getTrail(1);
-        System.out.println(t.getName());
-        System.out.println(t.getRating());
+        Database database = new Database(
+            AppPaths.userTrailsJson().toString(),
+            AppPaths.userWildlifeJson().toString());
+        TrailService service = new TrailService(database);
+
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame(service);
+            frame.setVisible(true);
+        });
     }
     
 }

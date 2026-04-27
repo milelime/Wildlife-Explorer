@@ -80,4 +80,22 @@ public class Trail {
         numRating++;
         rating = totalRating / numRating;
     }
+
+    public double getTotalRating() {
+        return totalRating;
+    }
+
+    public int getNumRating() {
+        return numRating;
+    }
+
+    public void setRatingState(double totalRating, int numRating) {
+        this.totalRating = totalRating;
+        this.numRating = numRating;
+        if (numRating <= 0) {
+            this.rating = 0.0;
+        } else {
+            this.rating = totalRating / numRating;
+        }
+    }
 }
