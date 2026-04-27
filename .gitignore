@@ -1,3 +1,14 @@
+# Local build output (Makefile / build.sh / build.ps1)
+build/
+
+# User-local app data & uploads — bundled samples stay under defaults/ (tracked)
+trails.json
+wildlife.json
+images/
+
+# Legacy single-file DB (replaced by trails.json + wildlife.json)
+wildlife-explorer.json
+
 # Compiled class file
 *.class
 
