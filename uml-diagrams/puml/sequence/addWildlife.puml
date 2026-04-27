@@ -1,29 +1,34 @@
 @startuml
-title Add Wildlife Information to a Trail
+!include ../include/diagram-style.puml
+
+title Add Wildlife to a Trail (new species or existing catalog)
 
 actor User
 boundary TrailPanel
 boundary WildlifePanel
-control WildlifeService
+control TrailService
 database Database
 
-User -> TrailPanel : openExistingTrail(trailId)
-TrailPanel --> User : displayTrail(trailId)
+User -> TrailPanel : open trail, "Add Wildlife"
+User -> TrailPanel : choose "from list" or "create new"
 
-User -> TrailPanel : chooseAddWildlifeInformation()
-TrailPanel -> WildlifePanel : openWildlifeForm(trailId)
+alt attach existing species
+  TrailPanel -> TrailService : listAllWildlife()
+  TrailService -> Database : getAllWildlife()
+  Database --> TrailService : catalog
+  User -> TrailPanel : pick wildlife not yet on trail
+  TrailPanel -> TrailService : attachExistingWildlifeToTrail(trailId, wildlifeId)
+  TrailService -> Database : attachExistingWildlifeToTrail(...)
+  Database -> Database : save()
+else create new species
+  TrailPanel -> WildlifePanel : open form (trail context)
+  User -> WildlifePanel : enter name, description, notes,\n optionally choose photo
+  WildlifePanel -> TrailService : addWildlife(trailId, wildlife)
+  TrailService -> Database : insertWildlife(...)
+  Database -> Database : save()
+  WildlifePanel --> TrailPanel : return to trail view
+end
 
-User -> WildlifePanel : enterWildlifeName(name)
-User -> WildlifePanel : enterWildlifeDescription(description)
-User -> WildlifePanel : enterEncounterNotes(notes)
-User -> WildlifePanel : uploadWildlifePictures(pictures)
-User -> WildlifePanel : clickSaveWildlife()
-
-WildlifePanel -> WildlifeService : addWildlife(trailId, name, description, notes, pictures)
-WildlifeService -> Database : insertWildlife(trailId, name, description, notes, pictures)
-Database --> WildlifeService : savedWildlife
-WildlifeService --> WildlifePanel : savedWildlife
-
-WildlifePanel --> User : displayWildlifeAddedConfirmation(savedWildlife)
+TrailPanel --> User : wildlife list refreshes
 
 @enduml
