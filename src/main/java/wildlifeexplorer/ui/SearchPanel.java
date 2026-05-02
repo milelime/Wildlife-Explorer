@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import wildlifeexplorer.model.Trail;
 import wildlifeexplorer.service.TrailService;
-import javax.swing.JPanel;
 
 public class SearchPanel extends JPanel {
     private final TrailService trailService;
@@ -70,6 +69,9 @@ public class SearchPanel extends JPanel {
 
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton refreshBtn = new JButton("Refresh");
+        //delete button
+        JButton deleteBtn = new JButton("Delete");
+        deleteBtn.addActionListener(e -> deleteSelectedTrail());
         refreshBtn.addActionListener(e -> {
             searchField.setText("");
             refreshList();
@@ -91,6 +93,8 @@ public class SearchPanel extends JPanel {
         bottom.add(refreshBtn);
         bottom.add(newTrailBtn);
         bottom.add(openBtn);
+        //delete button
+        bottom.add(deleteBtn);
         add(bottom, BorderLayout.SOUTH);
 
         refreshList();
@@ -108,19 +112,51 @@ public class SearchPanel extends JPanel {
         }
     }
 
+    //delete trail method 
+    private void deleteSelectedTrail() {
+        Trail selected = trailList.getSelectedValue();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Select a trail first");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this,
+        "Are you sure you want to delete \"" + selected.getName() + "\"?",
+        "Delete Trail",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE);
+        if(confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            trailService.deleteTrail(selected.getId());
+            refreshList();
+        } catch (Exception ex) {
+
+        }
+    }
+
     private void createTrailDialog() {
-        JTextField name = new JTextField();
-        JTextField length = new JTextField();
-        JTextField elevation = new JTextField();
+        JTextField name = new JTextField(5);
+        JTextField length = new JTextField(5);
+        JTextField elevation = new JTextField(5);
 
         JPanel form = new JPanel(new BorderLayout(8, 8));
         JPanel grid = new JPanel(new java.awt.GridLayout(0, 2, 8, 8));
         grid.add(new JLabel("Name"));
         grid.add(name);
         grid.add(new JLabel("Length"));
-        grid.add(length);
+        JPanel lengthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        lengthPanel.add(length);
+        lengthPanel.add(new JLabel("miles"));
+        grid.add(lengthPanel);
+        //grid.add(length);
         grid.add(new JLabel("Elevation"));
-        grid.add(elevation);
+        JPanel elevationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        elevationPanel.add(elevation);
+        elevationPanel.add(new JLabel("ft"));
+        grid.add(elevationPanel);
+        //grid.add(new JLabel("Elevation"));
+        //grid.add(elevation);
         form.add(grid, BorderLayout.CENTER);
 
         int result = JOptionPane.showConfirmDialog(this, form, "Create Trail", JOptionPane.OK_CANCEL_OPTION);
