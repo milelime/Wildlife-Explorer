@@ -32,6 +32,11 @@ public class TrailService {
         }
     }
 
+    //remove trail
+    public void deleteTrail(int id) {
+        database.deleteTrail(id);
+    }
+
     public void saveTrail() {
         database.save();
     }
