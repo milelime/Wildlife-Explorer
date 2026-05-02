@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
@@ -17,7 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.awt.Window;
 import java.util.function.Consumer;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -138,8 +138,8 @@ public class TrailPanel extends JPanel {
 
         title.setText(currentTrail.getId() + " — " + currentTrail.getName());
         meta.setText(
-            "Length: " + currentTrail.getLength()
-                + " | Elevation: " + currentTrail.getElevation()
+            "Length: " + currentTrail.getLength() + " miles"
+                + " | Elevation: " + currentTrail.getElevation() + " ft"
                 + " | Rating: " + String.format("%.2f", currentTrail.getRating())
         );
 
@@ -522,18 +522,27 @@ public class TrailPanel extends JPanel {
     private void editDialog() {
         if (currentTrail == null) return;
 
-        JTextField name = new JTextField(currentTrail.getName());
-        JTextField length = new JTextField(String.valueOf(currentTrail.getLength()));
-        JTextField elevation = new JTextField(String.valueOf(currentTrail.getElevation()));
+        JTextField name = new JTextField(currentTrail.getName(), 8);
+        JTextField length = new JTextField(String.valueOf(currentTrail.getLength()), 8);
+        JTextField elevation = new JTextField(String.valueOf(currentTrail.getElevation()), 8);
 
         JPanel form = new JPanel(new BorderLayout(8, 8));
         JPanel grid = new JPanel(new GridLayout(0, 2, 8, 8));
         grid.add(new JLabel("Name"));
         grid.add(name);
         grid.add(new JLabel("Length"));
-        grid.add(length);
-        grid.add(new JLabel("Elevation"));
-        grid.add(elevation);
+        JPanel lengthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        lengthPanel.add(length);
+        lengthPanel.add(new JLabel("miles"));
+        grid.add(lengthPanel);
+        //grid.add(length);
+       // grid.add(new JLabel("Elevation"));
+        //grid.add(elevation);
+        grid.add(new JLabel("Elevation:"));
+        JPanel elevationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5,0));
+        elevationPanel.add(elevation);
+        elevationPanel.add(new JLabel("ft"));
+        grid.add(elevationPanel);
         form.add(grid, BorderLayout.CENTER);
 
         int res = JOptionPane.showConfirmDialog(this, form, "Edit Trail", JOptionPane.OK_CANCEL_OPTION);
