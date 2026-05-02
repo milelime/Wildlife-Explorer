@@ -150,6 +150,16 @@ public class Database {
         save();
     }
 
+    //remove an existing trail entirely 
+    public void deleteTrail(int id) {
+        Trail trail = fetchTrailById(id);
+        if (trail == null){
+            throw new IllegalArgumentException("Trail not found: " + id);
+        }
+        trails.remove(trail);
+        save();
+    }
+
     /** Parses JSON text using the same parser as persisted database files (for tooling / comparisons). */
     public static Object parseJsonDocument(String json) {
         return Json.parse(json);
