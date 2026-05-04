@@ -159,6 +159,7 @@ package "wildlifeexplorer.data" <<Frame>> {
     + fetchTrailById(int) : Trail
     + findTrails(String) : List<Trail>
     + getAllTrails() : List<Trail>
+    + deleteTrailById(int trailId) : boolean
     + getAllWildlife() : List<Wildlife>
     + insertRating(int trailId, double score)
     + insertWildlife(int trailId, Wildlife)
@@ -193,6 +194,7 @@ package "wildlifeexplorer.service" <<Frame>> {
     + saveTrail()
     + rateTrail(id, rating)
     + getTrail(id) : Trail
+    + deleteTrail(id) : boolean
     + addWildlife(trailId, Wildlife)
     + listAllWildlife() : List<Wildlife>
     + attachExistingWildlifeToTrail(trailId, wildlifeId)
