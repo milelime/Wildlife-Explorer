@@ -1,0 +1,5 @@
+{"schemaVersion":1,"updatedAt":"2026-04-27T12:00:00Z","wildlife":[
+{"name":"White-tailed Deer","id":1,"description":"Often seen near forest edges at dawn and dusk.","notes":"Look for hoof prints that form two teardrops.","pictures":["defaults/images/wildlife/white-tailed-deer.png"]},
+{"name":"Red Fox","id":2,"description":"Adaptable canine; may appear along field margins and quiet paths.","notes":"","pictures":["defaults/images/wildlife/red-fox.png"]},
+{"name":"Pileated Woodpecker","id":3,"description":"Large woodpecker; listen for resonant drumming on dead snags.","notes":"Rectangular excavation marks on bark.","pictures":["defaults/images/wildlife/pileated-woodpecker.png"]}
+]}

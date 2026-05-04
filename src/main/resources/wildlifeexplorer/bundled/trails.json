@@ -1,0 +1,4 @@
+{"schemaVersion":1,"updatedAt":"2026-04-27T12:00:00Z","trails":[
+{"name":"Woodland Loop","id":1,"length":4.2,"elevation":120,"rating":4.5,"totalRating":9.0,"numRating":2,"pictures":["defaults/images/trails/woodland-loop.png"],"wildlifeIds":[1,2]},
+{"name":"Ridge Overlook","id":2,"length":6.1,"elevation":340,"rating":5.0,"totalRating":5.0,"numRating":1,"pictures":["defaults/images/trails/ridge-overlook.png"],"wildlifeIds":[2,3]}
+]}
