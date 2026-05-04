@@ -14,6 +14,11 @@ if [[ ${#FILES[@]} -eq 0 ]]; then
 fi
 javac -d "$OUT" "${FILES[@]}"
 
+RES="$ROOT/src/main/resources"
+mkdir -p "$OUT/wildlifeexplorer/bundled"
+cp -f "$RES/wildlifeexplorer/bundled/trails.json" "$RES/wildlifeexplorer/bundled/wildlife.json" \
+    "$OUT/wildlifeexplorer/bundled/"
+
 case "${1:-}" in
   run)
     exec java -cp "$OUT" wildlifeexplorer.Main

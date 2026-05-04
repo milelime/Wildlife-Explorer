@@ -1,8 +1,9 @@
 package wildlifeexplorer;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
+
+import wildlifeexplorer.defaults.DefaultBundle;
 
 /**
  * Project root is {@code user.dir} unless {@code -Dwildlifeexplorer.root=/path} is set.
@@ -54,20 +55,12 @@ public final class AppPaths {
     }
 
     /**
-     * If {@code trails.json} / {@code wildlife.json} are missing, copy from {@code defaults/}.
+     * If {@code trails.json} / {@code wildlife.json} are missing, copy sample data from
+     * {@code defaults/} at the project root when present, otherwise from classpath (
+     * {@code wildlifeexplorer/bundled/*.json}) so the app works regardless of current working directory.
      */
     public static void bootstrapUserDataFromDefaultsIfMissing() throws IOException {
-        Path userT = userTrailsJson();
-        Path userW = userWildlifeJson();
-        Path defT = defaultsTrailsJson();
-        Path defW = defaultsWildlifeJson();
-
-        if (!Files.exists(userT) && Files.exists(defT)) {
-            Files.copy(defT, userT);
-        }
-        if (!Files.exists(userW) && Files.exists(defW)) {
-            Files.copy(defW, userW);
-        }
+        DefaultBundle.copyBundledIntoUserDataIfMissing();
     }
 
     /** Resolve a path stored in JSON to an absolute filesystem path for I/O. */

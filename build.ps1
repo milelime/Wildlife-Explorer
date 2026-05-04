@@ -20,6 +20,11 @@ function Invoke-Build {
         throw "No Java sources under $Src"
     }
     & javac -d $Out @files
+    $bundled = Join-Path $Root "src/main/resources/wildlifeexplorer/bundled"
+    $destBundled = Join-Path $Out "wildlifeexplorer/bundled"
+    New-Item -ItemType Directory -Force -Path $destBundled | Out-Null
+    Copy-Item -Force (Join-Path $bundled "trails.json") $destBundled
+    Copy-Item -Force (Join-Path $bundled "wildlife.json") $destBundled
     Write-Host "Built classes -> $Out"
 }
 

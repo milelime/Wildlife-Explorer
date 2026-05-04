@@ -21,17 +21,15 @@ public final class BundledDefaultsComparer {
         try {
             Path ut = AppPaths.userTrailsJson();
             Path uw = AppPaths.userWildlifeJson();
-            Path dt = AppPaths.defaultsTrailsJson();
-            Path dw = AppPaths.defaultsWildlifeJson();
 
-            if (!Files.exists(ut) || !Files.exists(uw) || !Files.exists(dt) || !Files.exists(dw)) {
+            if (!Files.exists(ut) || !Files.exists(uw)) {
                 return false;
             }
 
             String userTrailsJson = Files.readString(ut, StandardCharsets.UTF_8);
             String userWildJson = Files.readString(uw, StandardCharsets.UTF_8);
-            String defTrailsJson = Files.readString(dt, StandardCharsets.UTF_8);
-            String defWildJson = Files.readString(dw, StandardCharsets.UTF_8);
+            String defTrailsJson = DefaultBundle.bundledTrailsJsonForCompare();
+            String defWildJson = DefaultBundle.bundledWildlifeJsonForCompare();
 
             Map<?, ?> userTrRoot = asMap(Database.parseJsonDocument(userTrailsJson.trim()));
             Map<?, ?> defTrRoot = asMap(Database.parseJsonDocument(defTrailsJson.trim()));
