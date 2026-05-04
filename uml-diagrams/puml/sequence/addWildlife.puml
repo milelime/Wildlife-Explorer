@@ -3,32 +3,32 @@
 
 title Add Wildlife to a Trail (new species or existing catalog)
 
-actor User
+actor "End User" as EU
 boundary TrailPanel
 boundary WildlifePanel
 control TrailService
 database Database
 
-User -> TrailPanel : open trail, "Add Wildlife"
-User -> TrailPanel : choose "from list" or "create new"
+EU -> TrailPanel : open trail, "Add Wildlife"
+EU -> TrailPanel : choose "from list" or "create new"
 
 alt attach existing species
   TrailPanel -> TrailService : listAllWildlife()
   TrailService -> Database : getAllWildlife()
   Database --> TrailService : catalog
-  User -> TrailPanel : pick wildlife not yet on trail
+  EU -> TrailPanel : pick wildlife not yet on trail
   TrailPanel -> TrailService : attachExistingWildlifeToTrail(trailId, wildlifeId)
   TrailService -> Database : attachExistingWildlifeToTrail(...)
   Database -> Database : save()
 else create new species
   TrailPanel -> WildlifePanel : open form (trail context)
-  User -> WildlifePanel : enter name, description, notes,\n optionally choose photo
+  EU -> WildlifePanel : enter name, description, notes,\n optionally choose photo
   WildlifePanel -> TrailService : addWildlife(trailId, wildlife)
   TrailService -> Database : insertWildlife(...)
   Database -> Database : save()
   WildlifePanel --> TrailPanel : return to trail view
 end
 
-TrailPanel --> User : wildlife list refreshes
+TrailPanel --> EU : wildlife list refreshes
 
 @enduml

@@ -52,16 +52,6 @@ package "wildlifeexplorer.model" <<Frame>> {
     + updateRating(double)
     + setRatingState(double, int)
   }
-
-  class User {
-    - name : String
-    - id : int
-    --
-    + User(name, id)
-    + getName() : String
-    + getId() : int
-    + validateUser(name, id) : boolean
-  }
 }
 
 package "wildlifeexplorer.data" <<Frame>> {
@@ -76,6 +66,7 @@ package "wildlifeexplorer.data" <<Frame>> {
     + findTrails(String) : List<Trail>
     + getAllTrails() : List<Trail>
     + getAllWildlife() : List<Wildlife>
+    + deleteTrail(int)
     + insertRating(int trailId, double score)
     + insertWildlife(int trailId, Wildlife)
     + attachExistingWildlifeToTrail(int trailId, int wildlifeId)
@@ -109,6 +100,7 @@ package "wildlifeexplorer.service" <<Frame>> {
     + saveTrail()
     + rateTrail(id, rating)
     + getTrail(id) : Trail
+    + deleteTrail(id)
     + addWildlife(trailId, Wildlife)
     + listAllWildlife() : List<Wildlife>
     + attachExistingWildlifeToTrail(trailId, wildlifeId)

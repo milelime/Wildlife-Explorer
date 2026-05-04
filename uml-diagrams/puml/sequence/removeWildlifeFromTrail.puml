@@ -3,16 +3,16 @@
 
 title Remove Wildlife from Trail (species stays in catalog)
 
-actor User
+actor "End User" as EU
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> TrailPanel : click "Remove" on wildlife block
+EU -> TrailPanel : click "Remove" on wildlife block
 
-TrailPanel -> User : confirm dialog
+TrailPanel -> EU : confirm dialog
 
-User -> TrailPanel : confirm
+EU -> TrailPanel : confirm
 
 TrailPanel -> TrailService : removeWildlifeFromTrail(trailId, wildlifeId)
 TrailService -> Database : removeWildlifeFromTrail(...)
@@ -20,6 +20,6 @@ Database -> Database : save()
 Database --> TrailService : ok
 TrailService --> TrailPanel : ok
 
-TrailPanel --> User : wildlife list refreshes
+TrailPanel --> EU : wildlife list refreshes
 
 @enduml

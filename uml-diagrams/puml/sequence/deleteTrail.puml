@@ -1,0 +1,26 @@
+@startuml
+!include ../include/diagram-style.puml
+
+title Delete Trail
+
+actor "End User" as EU
+boundary SearchPanel
+control TrailService
+database Database
+
+EU -> SearchPanel : select trail, Delete
+SearchPanel -> EU : confirm delete
+
+EU -> SearchPanel : confirm (Yes)
+
+SearchPanel -> TrailService : deleteTrail(trailId)
+TrailService -> Database : deleteTrail(trailId)
+Database -> Database : save()
+Database --> TrailService : ok
+TrailService --> SearchPanel : ok
+
+SearchPanel -> SearchPanel : refreshList()
+
+SearchPanel --> EU : list updates (trail removed)
+
+@enduml

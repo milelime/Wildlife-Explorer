@@ -3,22 +3,22 @@
 
 title Rate Existing Trail (0–10)
 
-actor User
+actor "End User" as EU
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> TrailPanel : open trail detail
+EU -> TrailPanel : open trail detail
 
 TrailPanel -> TrailService : getTrail(trailId)
 TrailService -> Database : fetchTrailById(trailId)
 Database --> TrailService : trail
 TrailService --> TrailPanel : trail
 
-TrailPanel --> User : show trail info
+TrailPanel --> EU : show trail info
 
-User -> TrailPanel : click "Rate"
-User -> TrailPanel : click score button (0–10)
+EU -> TrailPanel : click "Rate"
+EU -> TrailPanel : click score button (0–10)
 
 TrailPanel -> TrailService : rateTrail(trailId, score)
 TrailService -> Database : insertRating(trailId, score)
@@ -26,6 +26,6 @@ Database -> Database : save()
 Database --> TrailService : ok
 TrailService --> TrailPanel : ok
 
-TrailPanel --> User : updated average rating shown
+TrailPanel --> EU : updated average rating shown
 
 @enduml

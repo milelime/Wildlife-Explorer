@@ -3,23 +3,23 @@
 
 title Edit Existing Trail Information
 
-actor User
+actor "End User" as EU
 boundary SearchPanel
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> SearchPanel : search / select trail
-User -> TrailPanel : open trail (from Search or list)
+EU -> SearchPanel : search / select trail
+EU -> TrailPanel : open trail (from Search or list)
 
 TrailPanel -> TrailService : getTrail(trailId)
 TrailService -> Database : fetchTrailById(trailId)
 Database --> TrailService : trail
 TrailService --> TrailPanel : trail
 
-TrailPanel --> User : display trail + wildlife + images
+TrailPanel --> EU : display trail + wildlife + images
 
-User -> TrailPanel : click "Edit", change name/length/elevation
+EU -> TrailPanel : click "Edit", change name/length/elevation
 TrailPanel -> TrailService : editTrail(name, trailId, length, elevation)
 
 TrailService -> TrailService : update Trail fields
@@ -28,6 +28,6 @@ TrailService -> Database : save()
 Database --> TrailService : ok
 TrailService --> TrailPanel : ok
 
-TrailPanel --> User : refreshed trail fields
+TrailPanel --> EU : refreshed trail fields
 
 @enduml

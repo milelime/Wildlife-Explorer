@@ -18,44 +18,47 @@ skinparam rectangle {
   BorderColor black
 }
 
-actor User
+' Primary actor: human operator
+actor "End User" as EndUser
 
 rectangle "Wildlife Explorer" {
 
   package "Use" {
-    usecase "Search Trails" as UC_Search
-    usecase "View Trail Information\n(trail, wildlife, images)" as UC_View
+    usecase "UC-01 — Search Trails" as UC_Search
+    usecase "UC-02 — View Trail Information\n(trail, wildlife, images)" as UC_View
   }
 
   package "Contribute" {
-    usecase "Add New Trail" as UC_AddTrail
-    usecase "Rate Existing Trail\n(score 0–10)" as UC_RateTrail
-    usecase "Edit Existing Trail Information" as UC_EditTrail
-    usecase "Add Wildlife to Trail\n(new species or from catalog)" as UC_AddWildlife
-    usecase "Remove Wildlife from Trail" as UC_RemoveWildlife
+    usecase "UC-03 — Add New Trail" as UC_AddTrail
+    usecase "UC-04 — Rate Existing Trail\n(score 0–10)" as UC_RateTrail
+    usecase "UC-05 — Edit Existing Trail Information" as UC_EditTrail
+    usecase "UC-06 — Add Wildlife to Trail\n(new species or from catalog)" as UC_AddWildlife
+    usecase "UC-07 — Remove Wildlife from Trail" as UC_RemoveWildlife
+    usecase "UC-08 — Delete Trail" as UC_DeleteTrail
   }
 
   package "Required Trail Details" {
-    usecase "Provide Trail Name" as UC_TrailName
-    usecase "Provide Trail Length" as UC_TrailLength
-    usecase "Provide Elevation Changes" as UC_Elevation
-    usecase "Provide Trail Pictures\n(optional)" as UC_TrailPictures
+    usecase "UC-09 — Provide Trail Name" as UC_TrailName
+    usecase "UC-10 — Provide Trail Length" as UC_TrailLength
+    usecase "UC-11 — Provide Elevation Changes" as UC_Elevation
+    usecase "UC-12 — Provide Trail Pictures\n(optional)" as UC_TrailPictures
   }
 
   package "Wildlife details\n(mainly when creating new species)" {
-    usecase "Provide Wildlife Name" as UC_WildlifeName
-    usecase "Provide Wildlife Description" as UC_WildlifeDesc
-    usecase "Provide Encounter Notes" as UC_EncounterNotes
-    usecase "Provide Wildlife Pictures\n(optional)" as UC_WildlifePictures
+    usecase "UC-13 — Provide Wildlife Name" as UC_WildlifeName
+    usecase "UC-14 — Provide Wildlife Description" as UC_WildlifeDesc
+    usecase "UC-15 — Provide Encounter Notes" as UC_EncounterNotes
+    usecase "UC-16 — Provide Wildlife Pictures\n(optional)" as UC_WildlifePictures
   }
 }
 
-User --> UC_Search
-User --> UC_AddTrail
-User --> UC_RateTrail
-User --> UC_EditTrail
-User --> UC_AddWildlife
-User --> UC_RemoveWildlife
+EndUser --> UC_Search
+EndUser --> UC_AddTrail
+EndUser --> UC_RateTrail
+EndUser --> UC_EditTrail
+EndUser --> UC_AddWildlife
+EndUser --> UC_RemoveWildlife
+EndUser --> UC_DeleteTrail
 
 UC_Search .[#1f77b4].> UC_View : <<include>>
 UC_RateTrail .[#2ca02c].> UC_View : <<include>>
@@ -74,8 +77,8 @@ UC_AddWildlife .[#8c6d31].> UC_EncounterNotes : <<include>>
 UC_AddWildlife .[#3182bd].> UC_WildlifePictures : <<include>>
 
 note right of UC_AddWildlife
-  User may **attach an existing catalog species**
-  instead of filling all wildlife fields.
+  End User may **attach an existing catalog species**
+  instead of filling all wildlife detail fields (UC-13–UC-16).
 end note
 
 @enduml

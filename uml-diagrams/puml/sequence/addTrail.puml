@@ -3,14 +3,14 @@
 
 title Add New Trail
 
-actor User
+actor "End User" as EU
 boundary SearchPanel
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> SearchPanel : click "New Trail"
-User -> SearchPanel : enter name, length, elevation
+EU -> SearchPanel : click "New Trail"
+EU -> SearchPanel : enter name, length, elevation
 SearchPanel -> SearchPanel : nextTrailId()
 SearchPanel -> TrailService : createTrail(name, id, length, elevation)
 TrailService -> Database : insertTrail(trail)
@@ -18,11 +18,11 @@ Database -> Database : save()
 Database --> TrailService : ok
 TrailService --> SearchPanel : ok
 
-SearchPanel --> User : list refreshes (new trail)
+SearchPanel --> EU : list refreshes (new trail)
 
 ' Optional: add photos from trail detail view
 opt add photos later
-  User -> TrailPanel : open trail, "Add Trail Image"
+  EU -> TrailPanel : open trail, "Add Trail Image"
   TrailPanel -> TrailService : saveTrail()
   TrailService -> Database : save()
 end

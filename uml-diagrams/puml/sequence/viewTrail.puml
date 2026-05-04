@@ -3,13 +3,13 @@
 
 title View Trail Information
 
-actor User
+actor "End User" as EU
 boundary SearchPanel
 boundary TrailPanel
 control TrailService
 database Database
 
-User -> SearchPanel : select trail, Open
+EU -> SearchPanel : select trail, Open
 
 SearchPanel -> TrailPanel : setTrail(trailId) / open detail
 
@@ -24,6 +24,6 @@ end note
 
 TrailService --> TrailPanel : trail
 
-TrailPanel --> User : display trail metadata,\ntrail images, wildlife text + thumbnails
+TrailPanel --> EU : display trail metadata,\ntrail images, wildlife text + thumbnails
 
 @enduml

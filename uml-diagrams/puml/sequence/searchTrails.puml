@@ -3,13 +3,13 @@
 
 title Search Trails
 
-actor User
+actor "End User" as EU
 boundary SearchPanel
 control TrailService
 database Database
 
-User -> SearchPanel : enter criteria (optional)
-User -> SearchPanel : Search or Refresh
+EU -> SearchPanel : enter criteria (optional)
+EU -> SearchPanel : Search or Refresh
 
 SearchPanel -> TrailService : searchTrail(criteria)
 note right
@@ -21,6 +21,6 @@ TrailService -> Database : findTrails(criteria)
 Database --> TrailService : matchingTrails
 TrailService --> SearchPanel : matchingTrails
 
-SearchPanel --> User : list display
+SearchPanel --> EU : list display
 
 @enduml
