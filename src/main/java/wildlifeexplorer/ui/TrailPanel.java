@@ -115,10 +115,11 @@ public class TrailPanel extends JPanel {
         addWildlifeBtn.addActionListener(e -> addWildlifeChoice());
 
         bottom.add(backBtn);
-        bottom.add(addPicBtn);
         bottom.add(editBtn);
         bottom.add(rateBtn);
         bottom.add(addWildlifeBtn);
+        bottom.add(addPicBtn);
+
         add(bottom, BorderLayout.SOUTH);
     }
 
